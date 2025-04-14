@@ -149,7 +149,7 @@ def lambda_handler(event, context):
             "to": email,
             "from": "runningeventswarning@gmail.com",
             "subject": f"Bevestig inschrijving {event_name}",
-            "content": f"Bevestig je inschrijving voor {event_name} <a href='http://example.test.com?id={sub_id}'>HIER</a>"
+            "content": f"Bevestig je inschrijving voor notificaties omtrent {event_name} <a href='http://example.test.com?id={sub_id}'>HIER</a>"
         }
         lambda_client.invoke(
             FunctionName='sendMail',  # Replace with the name of your sendMail function
