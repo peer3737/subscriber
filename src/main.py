@@ -159,7 +159,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             "headers": {"Content-Type": "text/html"},
-           "body": f"""
+            "body": f"""
             <html>
             <head>
               <title>Thank You</title>
@@ -211,7 +211,7 @@ def lambda_handler(event, context):
                 <p>You selected the event: <strong>{event_name}</strong></p>
                 <p>A confirmation email has been sent to this address with a confirmation link.<br> 
                 Please confirm your subscription within 30 minutes. <br>
-                If the email ends up in your spam folder, please mark it as “Not Spam” to avoid missing future messages.
+                If the email ends up in your spam folder, please mark it as "Not Spam" to avoid missing future messages.
                 </p>
                 <a href="/">Go back to the form</a>
               </div>
