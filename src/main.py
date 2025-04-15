@@ -128,7 +128,8 @@ def lambda_handler(event, context):
         body = event.get("body", "")
         if event.get("isBase64Encoded"):
             body = base64.b64decode(body).decode('utf-8')
-
+        print(body)
+        print(event)
         data = urllib.parse.parse_qs(body)
         email = data.get("email", [""])[0]
         event_string = data.get("event", [""])[0]
