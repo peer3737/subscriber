@@ -137,7 +137,7 @@ def lambda_handler(event, context):
         sub_id = str(uuid.uuid4()).replace('-', '')
         table_name = 'subscribe_confirm'  # Replace with your table name.
         valid_until = int(time.time()) + 30*60
-        ip_address = event["requestContext"]["identity"]["sourceIp"]
+        ip_address = event["requestContext"]["http"]["sourceIp"]
         item = {
             'id': sub_id,
             'valid_until': valid_until,
