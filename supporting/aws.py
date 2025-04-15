@@ -16,7 +16,7 @@ def dynamodb_query(table, filter=None):
     return items
 
 
-def all_events(table, filter=None):
+def get_all(table, filter=None):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table)
 

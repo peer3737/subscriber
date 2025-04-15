@@ -1,3 +1,4 @@
+import random
 import urllib.parse
 import base64
 import boto3
@@ -24,8 +25,12 @@ def lambda_handler(event, context):
     if method == "GET":
         event_list = []
 
-        events = aws.all_events('events')
-
+        events = aws.get_all('events')
+        response = aws.get_all(table='captcha')
+        index = random.randint(0, len(response)-1)
+        captcha = response[index]
+        captcha_name = captcha["name"]
+        captcha_id = captcha["id"]
         # Create the dropdown options dynamically
         options_html = ""
         for e in events:
@@ -114,7 +119,8 @@ def lambda_handler(event, context):
                   <select name="event" id="event">
                     {options_html}
                   </select>
-            
+                <label for="captcha">{captcha_name}</label>
+                  <input type="text" id="captcha" name="captcha_{captcha_id}" required />
                   <input type="submit" value="Subscribe" />
                 </form>
               </div>
@@ -128,12 +134,12 @@ def lambda_handler(event, context):
         body = event.get("body", "")
         if event.get("isBase64Encoded"):
             body = base64.b64decode(body).decode('utf-8')
-        print(body)
-        print(event)
+
         data = urllib.parse.parse_qs(body)
         email = data.get("email", [""])[0]
         event_string = data.get("event", [""])[0]
         event_id, event_name = event_string.split(":")
+        print(data)
         sub_id = str(uuid.uuid4()).replace('-', '')
         table_name = 'subscribe_confirm'  # Replace with your table name.
         valid_until = int(time.time()) + 30*60
