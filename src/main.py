@@ -130,19 +130,20 @@ def lambda_handler(event, context):
             body = base64.b64decode(body).decode('utf-8')
 
         data = urllib.parse.parse_qs(body)
-        name = data.get("name", [""])[0]
         email = data.get("email", [""])[0]
         event_string = data.get("event", [""])[0]
         event_id, event_name = event_string.split(":")
         sub_id = str(uuid.uuid4()).replace('-', '')
         table_name = 'subscribe_confirm'  # Replace with your table name.
         valid_until = int(time.time()) + 30*60
-
+        ip_address = event["requestContext"]["identity"]["sourceIp"]
         item = {
             'id': sub_id,
             'valid_until': valid_until,
             'event_id': event_id,
-            'email': email
+            'email': email,
+            'ip': ip_address,
+            'confirmed': False
         }
         aws.put_item_dynamodb(table_name, item)
         payload = {
